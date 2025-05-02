@@ -1,0 +1,824 @@
+
+--- Page 1 ---
+INTRODUCTION TO IA-32
+
+
+--- Page 2 ---
+ITA-32
+
+« Assembly Language
+> 32-bit Intel
+
+» Most common personal computer
+architecture
+
+» Backwards compatible for |A-64
+
+= Other Names
+» X86, x86-32, i386
+
+
+--- Page 3 ---
+History of IA-32
+
+= History
+> Derives from Intel 16-bit architecture
+» First implemented on Intel's 80386 in 1985
+> Forked into 64-bit implementations
+= Intel's [A-64 in 1999
+=» AMD's AMD64 in 2000
+
+
+--- Page 4 ---
+Reference Manuals
+
+= Intel Developer's Manuals
+» Documentation Changes
+» Volume 1: Basic Architecture
+> Volume 2A: Instruction Set Reference A-M
+» Volume 2B: Instruction Set Reference N-Z
+» Volume 3A: System Programming Guide
+» Volume 3B: System Programming Guide
+
+http://www. intel.
+
+
+--- Page 5 ---
+| Assembly Notation
+
+© AT&T
+> Source precedes destination
+
+» Used commonly in old GNU tools (gcc, gdb,
+..)
+
+4 Example: mov $4, %eax // GP register assignment
+mov $4, %(eax) // Memory assignment
+
+= Intel
+» Destination precedes source
+
+mov eax, 4 // GP register assignment
+
+mov [eax], 4 // Memory assignment
+
+
+--- Page 6 ---
+Registers
+
+= Processor Memory
+» Act as variables used by the processor
+» Are addressed directly by name in assembly code
+
+> Very efficient
+=» Good alternative to RAM
+
+> Many flavors
+= Data registers
+= Address registers
+= Conditional registers
+= General purpose registers
+
+
+--- Page 7 ---
+IA-32 Registers
+
+31 General-Purpose Registers
+
+Seament Registers
+15
+
+Program Status and Contro! Register
+31
+
+0
+31 Instruction Polnter| 0
+
+
+--- Page 8 ---
+IA-32 Registers
+
+= General Purpose Registers
+» EAX
+= General storage, accumulator, results
+>» EBX
+= General storage, base, pointer for data in DS segment
+>» ECX
+= General storage, counter
+» EDX
+= General storage, data, I/O pointer
+
+> ESI, EDI
+
+
+--- Page 9 ---
+IA-32 Registers
+
+= General Purpose Registers
+» EBP
+= Stack “base pointer”
+= Current base of stack data
+» ESP
+= “Stack pointer”
+= Current location of the stack
+
+
+--- Page 10 ---
+IA-32 Registers
+
+- Extended Instruction Pointer (EIP)
+» The program counter
+> Pointer to the next instruction
+
+> Altered by special instructions on \y
+e JMP, Jcc, CALL, RET, and IRET
+» Exploitation focuses on controlling the EIP
+
+
+--- Page 11 ---
+IA-32 Registers
+
+= Status and Control (EFLAGS)
+» Processor info/modes, instruction status
+flags
+» Basis for conditional code execution
+
+
+--- Page 12 ---
+IA-32 Registers
+
+« Important Flags
+
+oO
+
+Carry flag (CF)
+= Set if an arithmetic operation generates a carry bit
+Parity flag (PF)
+
+= Set if the least-significant byte of a result contains an even
+number of ones
+
+Zero flag (ZF)
+
+= Set if the result is zero
+
+Sign flag (SF)
+
+= Equal to the most significant bit of a result
+Overflow flag (OF)
+
+= Set if integer overflows
+
+
+--- Page 13 ---
+Segmentation Memory
+
+Management Model
+» Segmentation
+
+Segmented Model
+
+Segments 4
+Offset (effective address) ~ eet
+: Address
+
+oalcal Space*
+
+Address segment Selector
+
+--- Page 14 ---
+|| IA-32 Registers
+
+= Segment Registers
+» 16-bit memory segment selectors
+» CS
+= Code
+= Altered implicitly by calls, exceptions, etc.
+» DS
+= Data
+» SS
+= Stack
+
+mov ss:[edx], eax // Segment: [Offset]
+
+--- Page 15 ---
+IA-32 Registers
+
+= Segment Registers
+» 16-bit memory segment selectors
+> ES
+= Data
+» FS
+= Data
+» GS
+= Data
+
+
+--- Page 16 ---
+IA-32 Registers
+
+= Other Registers
+
+Oo
+
+FPU
+
+=» STO-ST7, status word, control word, tag word, ...
+MMX
+
+=» MMO-MM7
+
+=» XMMO-XMM7
+
+Control registers
+=» CRO, CR2, CR3, CR4
+
+System table pointer registers
+= GDTR, LDTR, IDTR, task register
+
+Debug registers
+
+
+--- Page 17 ---
+Alternate General Purpose
+
+Register Names
+
+General-Purpose Registers
+
+1615 87 O 16-bit 32-bit
+
+vw
+
+J>
+
+w
+A
+
+on
+
+nnnn en
+
+w
+
+hm
+mm
+oy
+
+m
+Ww
+oy
+
+--- Page 18 ---
+| Instruction Operands
+
+= Instructions Operate on:
+» Registers
+= EIP cannot be an operand
+Why? ...What was EIP again?
+
+> Immediates
+= Literal, constant values
+
+mov eax, 4
+
+- Memory addresses
+
+
+--- Page 19 ---
+Operand Addressing
+
+= Instruction Addressing
+
+» Sources are addressed by:
+= Immediates
+= Pointers in registers
+= Pointers in memory locations
+= An I/O port
+
+» Destinations are addressed by:
+= Pointers in registers
+» Pointers in memory locations
+
+
+--- Page 20 ---
+Operand Addressing
+
+= Relative Offset Computation
+
+o
+
+Displacement
+= None, 8, 16, or 32-bits
+
+Base Index
+= Value in GP register ay
+Index EBX
+= Value in GP register [iG | Dx |
+Scale factor E aa
+
+=1,2,4,or8 EDI
+» Multiplier for index -
+
+mov eax esi + ecx*4 + 4
+
+j 1
+
+2
+c
+
+4
+8
+
+Displacement
+
+None
+8-bit
+16-bit
+
+32-bit
+
+Offset = Base + (Index * Scale) + Displacement
+
+--- Page 21 ---
+Data Types
+
+7 60
+[Jer
+N
+
+15 87 O
+N+1 oN
+31 1615 0
+High Word Doubleword
+N+2 N
+63 32 31 0
+High Doubleword Quadword
+N+4 N
+127 64 63 0
+| High Quadwors to uatvord cada
+N+8 N
+
+--- Page 22 ---
+Common IA-32 Instructions
+
+
+--- Page 23 ---
+Move Instruction
+
+= MOV
+
+> Moves a value from a source to a destination
+
+mov eax, 4 // eax = 4
+
+
+--- Page 24 ---
+No Operation (NOP)
+
+= NOP
+> Doesn't do anything
+» Handy placeholder
+= Also handy for shellcoding
+
+> Hex value
+= \x90
+
+
+--- Page 25 ---
+Arithmetic Instructions
+
+= ADD, ADC
+» Add, add with carry
+
+- SUB, SUBB
+
+> Subtract, subtract with borrow
+
+= MUL, IMUL
+> Multiply
+
+= DIV, IDIV
+- Divide
+
+
+--- Page 26 ---
+Binary Logic Instructions
+
+= AND, OR, NOT
+» And, or, not
+= XOR
+
+» Xor trick (used by compilers and shellcoders)
+= Equivalent to “eax = eax ~ eax;" in C
+
+xor eax, eax
+
+
+--- Page 27 ---
+Binary Operation
+Instructions
+
+" SAL, SAR
+» Shift arithmetically left/right
+
+*" SHL, SHR
+» Shift logically left/right
+
+
+--- Page 28 ---
+Load Instructions
+
+» LEA
+» May use relative or absolute address
+
+» Typically used to create an absolute address
+from relative offsets in a general purpose
+register
+
+» LDS
+
+» Load pointer using DS
+= LES
+
+
+--- Page 29 ---
+Compare Instructions
+
+« CMP (aka arithmetic compare)
+Compares two numbers
+= Performs a subtraction (SRC1 - SRC2)
+Sets CF, OF, SF, ZF, AF, and PF flags
+
+« TEST (aka logical compare)
+Compares two numbers
+Sets SF, ZF, PF (also sets CF, OF to zero)
+
+TEMP <— SRC1 AND SRC2;
+SF <— MSB(TEMP);
+
+IF TEMP =O
+
+THEN ZF < 1;
+
+ELSE ZF —0O;
+
+PF <— BitwiseXNOR(TEMP[O:7]);
+CF<O;
+
+OF < O;
+
+
+--- Page 30 ---
+Jump Instructions
+
+= JMP
+
+> Unconditional transfer of code execution
+
+» May use relative or absolute address
+
+
+--- Page 31 ---
+Conditional Jump
+
+Instructions
+
+ae
+» cc is called the conditional code
+» Conditional codes
+= JE/JZ (jump equal/zero, ZF = 1)
+= JNE/JNZ (jump not equal/not zero, ZF = 0)
+» JECXZ (jump ECX zero, ECX = 0)
+7 i (jump greater, equal/not less, (SF xor OF)
+
+» JA, JAE, JB, JBE, JC, JCXZ, JE, JG, JGE, JL, JLE,
+JNA, JNAE, JNB, JNBE, JNC, JNE, JNG, JNGE,
+
+
+--- Page 32 ---
+Stack
+
+»= LIFO Memory Structure
+
+» x86: stack grows downward (high to low
+addresses)
+
+Bottom of §
+(Initial E
+
+The Stack Can Be
+16 or 32 Bits Wide
+
+The EBP regis'
+
+typically set to point
+
+to the return
+struction pointer.
+
+Frame Boundary
+
+
+--- Page 33 ---
+Stack Instructions
+
+PUSH
+
+Decrement stack pointer, put operand at
+ESP
+
+>§_ =a
+
+Load stack value, increment stack pointer
+
+Before Pushing Doubleword After Pushing Doubleword
+
+Before Popping Doubleword After Popping Doubleword
+Stack :
+Growth 31 0 31 0
+
+Doubleword Value
+
+
+--- Page 34 ---
+| Stack Instructions
+
+» PUSHA
+
+> Push all GP registers to the stack
+* POPA
+
+» Pop data from stack into all GP registers
+" ENTER
+
+> Enter stack frame
+
+push ebp; mov ebp, esp
+
+» LEAVE
+
+
+--- Page 35 ---
+Near Call and Return
+
+Instructions
+= Near Call/Return
+» Intrasegment call/return
+
+> Call or return to code in the same code
+segment
+
+= Far Call/Return
+» Intersegment call/return
+
+> Call or return to code not in the same
+segment
+
+
+--- Page 36 ---
+Near Call and Return
+
+Instructions
+
+= Near Call (CALL)
+> Pushes the current EIP (the return address)
+» Loads the offset of the called procedure
+
+= Near Return (denoted RET or RETN)
+
+> Pops the return address into EIP
+
+» If optional n argument, increment ESP by n
+= For clearing out parameters
+
+
+--- Page 37 ---
+Far Call and Return
+
+Instructions
+= Far Call (CALL)
+
+> Pushes the current CS (the return code
+segment)
+
+> Pushes the current EIP (the return address)
+
+» Loads the CS, offset of the called procedure
+- Far Return (denoted RET or RETF)
+
+» Pops the return address into EIP
+
+» Pops the return code segment
+
+- If optional n argument, increment ESP by n
+
+
+--- Page 38 ---
+Calls and Returns
+
+Stack
+Frame
+Before
+Call
+
+Stack
+Frame
+After
+Call
+
+Stack During
+Near Call
+
+Param 1
+
+Param 2
+
+Param 3
+Calling EIP
+
+—
+
+Stack During
+Near Return
+
+Param 1
+Param 2
+Param 3
+
+Calling EIP
+
+Stack
+Frame
+Before
+Call
+
+~4— ESP Before Call
+
+~=— ESP After Call
+
+Stack
+Frame
+After
+Call
+
+}=@— ESP After Return
+
+~€— ESP Before Return
+SS
+
+Note: On a near or far return, parameters are
+
+released from the stack based on the
+optional n operand in the RET n instruction.
+
+Stack During
+
+Far Call
+
+Param 1
+
+Param 2
+
+Param 3
+Calling CS
+Calling EIP
+
+Stack During
+
+Far Return
+
+Param 1
+
+Param 2
+
+Param 3
+Calling CS
+Calling EIP
+
+~t— ESP Before Call
+
+~“— ESP After Call
+
+~«— ESP After Return
+
+~4— ESP Before Return
+
+
+--- Page 39 ---
+Calls and Returns
+
+<stdio.h>
+<stdlib.h>
+
+print_numf{
+
+maint argc,
+print_num(1l, 2, 3):
+
+print_num{ ;
+printf("%n, %n, “nsn", 11,12. 13);
+
+CCCCCCCC
+ee AH
+
+8612FF2es
+8612FF3a
+
+6612FFSa
+9640103E
+Address | Hex dump fa me
+
+si ntdll.7cs
+
+v | GG12FF48
+
+--- Page 40 ---
+Calls and Returns
+
+<stdio.h>
+stdlib.h>
+
+print_numf{
+
+maint argc,
+)
+
+print_num(1, 2,
+
+print_num{
+printf("%n, %
+
+PUSH EBP
+MOV EB S
+
+DWORD-
+
+corm,
+
+Address | Hex dump Ela 612 Fed
+
+
+--- Page 41 ---
+String Operation
+Instructions
+- INS, OUTS
+
+> Input/output string from/to a port
+= MOVS, MOVSB, MOVSW, MOVSD
+» Moves data from one string to another
+» LODS, LODSB, LODSW, LODSD
+
+» Loads data into a string (DS:[(E)SI] to (E)
+AX)
+
+= STOS, STOSB, STOSW, STOSD
+
+
+--- Page 42 ---
+String Operation
+Instructions
+- CMPS, CMPSB, CMPSW, CMPSD
+
+» Compares strings in memory
+
+= SCAS, SCASB, SCASW, SCASD
+
+» Compare a string (aka scan string)
+
+
+--- Page 43 ---
+Repeat String Operation
+
+Instructions
+
+= REP, REPE, REPZ, REPNE, REPNZ
+> Repeats using the ECX register
+> REPxx
+=» Where xx is a string operation instruction
+
+
+--- Page 44 ---
+Interrupt Instructions
+
+= INT
+
+> Generate a software interrupt
+° INT 3h
+
+= Debugger breakpoint
+
+= Instruction hex value: \xCC or \xCD\x03
+> INT 80h
+
+= Unix system call
+
+»= RETI
+
+
+--- Page 45 ---
+Questions/Comments?
+
+Some IA-32 Pictures from:
+http://www. intel.com/products/processor/manuals/
+

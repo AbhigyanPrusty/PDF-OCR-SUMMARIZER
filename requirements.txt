@@ -1,0 +1,6 @@
+streamlit==1.33.0
+pytesseract==0.3.10
+pymupdf==1.25.5
+requests==2.31.0
+Pillow==11.0.0
+python-dotenv==1.0.1
