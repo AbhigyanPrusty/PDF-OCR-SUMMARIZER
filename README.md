@@ -1,19 +1,19 @@
-# 🧠 PDF OCR Summarizer
+# PDF OCR Summarizer
 
 This project extracts text from scanned PDF documents using OCR (Optical Character Recognition) and summarizes the content using a Hugging Face transformer model.
 
 ---
 
-## 🚀 Features
+## Features
 
-- ✅ Extracts text from scanned or image-based PDFs using Tesseract OCR
-- ✅ Summarizes the extracted text using a Hugging Face NLP model (`distilbart-cnn-12-6`)
-- ✅ Environment-based configuration for API keys
-- ✅ Modular Python codebase
+-  Extracts text from scanned or image-based PDFs using Tesseract OCR
+-  Summarizes the extracted text using a Hugging Face NLP model (`distilbart-cnn-12-6`)
+-  Environment-based configuration for API keys
+-  Modular Python codebase
 
 ---
 
-## 🛠 Requirements
+## Requirements
 
 - Python 3.7+
 - Tesseract OCR
@@ -22,7 +22,7 @@ This project extracts text from scanned PDF documents using OCR (Optical Charact
 
 ---
 
-## 📦 Installation
+## Installation
 
 1. **Clone the repository:**
 
@@ -57,7 +57,7 @@ POPPLER_PATH = r"C:\Program Files\Poppler\poppler-24.08.0\Library\bin"
 
 ---
 
-## 🔐 Setup Environment
+## Setup Environment
 
 1. Create a `.env` file:
 
@@ -69,7 +69,7 @@ You can get a token from https://huggingface.co/settings/tokens
 
 ---
 
-## 🧪 Running the Project
+## Running the Project
 
 1. Place a scanned or image-based PDF inside the project folder (e.g., `document.pdf`).
 
@@ -86,7 +86,7 @@ print(summary)
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 
 ```bash
 python test_summarizer.py
@@ -94,20 +94,16 @@ python test_summarizer.py
 
 ---
 
-## 🧠 Model Used
+## Model Used
 
 - `sshleifer/distilbart-cnn-12-6` — a smaller and faster version of BART trained for summarization tasks.
 
 ---
 
-## ⚠️ Notes
+## Notes
 
 - The Hugging Face free tier includes limited inference tokens per month.
 - Large PDFs might be truncated due to model input limits (e.g., 1024 tokens).
 - OCR accuracy depends on PDF quality and resolution.
 
 ---
-
-## 📄 License
-
-MIT License © 2025
